@@ -1,0 +1,23 @@
+# Ignore Python bytecodes
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environment
+.venv/
+
+# Ignore environment variables
+.env
+.env.*
+
+# Ignore Ruff cache
+.ruff_cache/
+
+# Ignore IDE settings
+.idea/
+.vscode/
+.zed/
+
+# Ignore miscellaneous files
+*.log
+.DS_Store
+Thumbs.db
