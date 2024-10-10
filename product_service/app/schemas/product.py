@@ -9,7 +9,7 @@ class BaseProduct(BaseModel):
         strict=True,
     )
 
-    name: str
+    name: str = Field(min_length=1, max_length=100, pattern=r"^[a-zA-Z0-9-_&,.+ ]+$")
     price: int = Field(gt=0)
 
 
