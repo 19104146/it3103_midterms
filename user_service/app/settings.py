@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     APP_NAME: str = "User Microservice"
     APP_VERSION: str = "1.0.0-alpha"
 
+    JWT_ALGORITHM: str = "HS256"
+    JWT_EXPIRY: int = 15
     JWT_SECRET: str
 
 
