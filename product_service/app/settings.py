@@ -8,4 +8,4 @@ class Settings(BaseSettings):
     APP_VERSION: str = "1.0.0-alpha"
 
 
-settings = Settings()  # type: ignore
+settings = Settings()

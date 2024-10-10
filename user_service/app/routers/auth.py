@@ -11,7 +11,8 @@ router = APIRouter()
 
 @router.post("/login")
 def login(
-    user: UserWrite, auth_service: AuthService = Depends(get_auth_service)
+    user: UserWrite,
+    auth_service: AuthService = Depends(get_auth_service),
 ) -> str:
     try:
         existing_user = auth_service.authenticate_user(user.username, user.password)
@@ -22,22 +23,26 @@ def login(
                 "role": existing_user.role,
             }
         )
-    except AuthUnauthorizedException:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-    except UserNotFoundException:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+    except AuthUnauthorizedException as e:
+        raise HTTPException(detail=e.message, status_code=status.HTTP_401_UNAUTHORIZED)
+    except UserNotFoundException as e:
+        raise HTTPException(detail=e.message, status_code=status.HTTP_404_NOT_FOUND)
 
 
-@router.post("/register")
+@router.post("/register", status_code=status.HTTP_201_CREATED)
 def register(
-    user: UserWrite, auth_service: AuthService = Depends(get_auth_service)
+    user: UserWrite,
+    auth_service: AuthService = Depends(get_auth_service),
 ) -> None:
     try:
         hashed_password = auth_service.get_password_hash(user.password)
         auth_service.user_service.create_user(
-            UserWrite(username=user.username, password=hashed_password)
+            UserWrite(
+                username=user.username,
+                password=hashed_password,
+            )
         )
-    except UserConflictException:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT)
     except UserNotFoundException as e:
         raise HTTPException(detail=e.message, status_code=status.HTTP_404_NOT_FOUND)
+    except UserConflictException as e:
+        raise HTTPException(detail=e.message, status_code=status.HTTP_409_CONFLICT)

@@ -22,7 +22,7 @@ def create_user(
     try:
         return user_service.create_user(user)
     except UserConflictException as e:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
+        raise HTTPException(detail=e.message, status_code=status.HTTP_409_CONFLICT)
 
 
 @router.get("/{user_id}", response_model=UserRead)
@@ -33,7 +33,7 @@ def read_user(
     try:
         return user_service.read_user(user_id)
     except UserNotFoundException as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        raise HTTPException(detail=e.message, status_code=status.HTTP_404_NOT_FOUND)
 
 
 @router.put("/{user_id}", response_model=UserRead)
@@ -45,9 +45,9 @@ def update_user(
     try:
         return user_service.update_user(user_id, user)
     except UserNotFoundException as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        raise HTTPException(detail=e.message, status_code=status.HTTP_404_NOT_FOUND)
     except UserConflictException as e:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
+        raise HTTPException(detail=e.message, status_code=status.HTTP_409_CONFLICT)
 
 
 @router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -58,4 +58,4 @@ def delete_user(
     try:
         user_service.delete_user(user_id)
     except UserNotFoundException as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        raise HTTPException(detail=e.message, status_code=status.HTTP_404_NOT_FOUND)
