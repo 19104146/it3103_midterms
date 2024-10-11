@@ -15,5 +15,7 @@ class Config(BaseSettings):
     USER_SERVICE_URL: str = "http://localhost:3002"
     ORDER_SERVICE_URL: str = "http://localhost:3003"
 
+    REDIS_URL: str = "redis://localhost:6379"
+
 
 config = Config()  # type: ignore
