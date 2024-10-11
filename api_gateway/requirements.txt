@@ -1,0 +1,7 @@
+bcrypt==4.2.*
+fastapi==0.115.*
+passlib==1.7.*
+pydantic-settings==2.5.*
+pyjwt==2.9.*
+requests==2.32.*
+uvicorn==0.31.*

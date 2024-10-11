@@ -1,13 +1,22 @@
+from passlib.context import CryptContext
 from typing_extensions import List
 
 from app.exceptions.user import UserConflictException, UserNotFoundException
-from app.schemas.user import UserRead, UserWrite
+from app.schemas.user import Role, UserRead, UserWrite
 
 
 class UserService:
     def __init__(self):
-        self.users: List[UserRead] = []
+        self.users: List[UserRead] = [
+            UserRead(
+                id=1,
+                username="admin",
+                password="$2b$12$TWfE0QC6wrSMO09J9R70x.IOQhGZxHIhtBFFdcnHJLf/MzjZUaQeC",
+                role=Role.ADMIN,
+            )
+        ]
         self.next_id = 1
+        self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
     def list_users(self) -> List[UserRead]:
         return self.users
@@ -40,7 +49,7 @@ class UserService:
                 raise UserConflictException()
 
         existing_user.username = updated_user.username
-        existing_user.password = updated_user.password
+        existing_user.password = self.pwd_context.hash(updated_user.password)
         return existing_user
 
     def delete_user(self, user_id: int) -> None:

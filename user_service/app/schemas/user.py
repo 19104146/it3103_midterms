@@ -5,8 +5,8 @@ from typing_extensions import Any, Dict
 
 
 class Role(str, Enum):
-    admin = "ADMIN"
-    user = "USER"
+    ADMIN = "ADMIN"
+    USER = "USER"
 
 
 class BaseUser(BaseModel):
@@ -18,7 +18,7 @@ class BaseUser(BaseModel):
 
     username: str = Field(min_length=3, max_length=20, pattern=r"^[a-zA-Z0-9]+$")
     password: str = Field(min_length=8, max_length=64)
-    role: Role = Field(default=Role.user)
+    role: Role = Field(default=Role.USER)
 
 
 class UserRead(BaseUser):
