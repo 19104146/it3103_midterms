@@ -2,10 +2,10 @@ from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
 from typing_extensions import List
 
-from app.dependencies.product import get_product_service
-from app.exceptions.product import ProductConflictException, ProductNotFoundException
-from app.schemas.product import ProductRead, ProductWrite
-from app.services.product import ProductService
+from app.dependencies import get_product_service
+from app.exceptions import ProductConflictException, ProductNotFoundException
+from app.schemas import ProductRead, ProductWrite
+from app.services import ProductService
 
 router = APIRouter()
 

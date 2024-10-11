@@ -1,7 +1,7 @@
 from typing_extensions import List
 
-from app.exceptions.product import ProductConflictException, ProductNotFoundException
-from app.schemas.product import ProductRead, ProductWrite
+from app.exceptions import ProductConflictException, ProductNotFoundException
+from app.schemas import ProductRead, ProductWrite
 
 
 class ProductService:

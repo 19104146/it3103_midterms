@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from app.services.product import ProductService
+from app.services import ProductService
 
 
 @lru_cache
